@@ -1,0 +1,352 @@
+<UserControl x:Class="XboxControllerStudio.Views.ControllerDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:XboxControllerStudio.Views"
+             Background="Transparent">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,2,0,8">
+
+            <!-- Connection status banner -->
+            <Border Padding="12,8"
+                    Margin="0,0,0,20">
+                <Border.Style>
+                    <Style TargetType="Border"
+                           BasedOn="{StaticResource StyleGlassCard}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}"
+                                         Value="True">
+                                <Setter Property="Background"
+                                        Value="{StaticResource BrushAccentDim}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock VerticalAlignment="Center"
+                           FontSize="13">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text"
+                                    Value="{DynamicResource StatusDisconnected}"/>
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource BrushTextMuted}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}"
+                                             Value="True">
+                                    <Setter Property="Text"
+                                            Value="{DynamicResource StatusConnected}"/>
+                                    <Setter Property="Foreground"
+                                            Value="{StaticResource BrushConnected}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Border>
+
+            <!-- ===== BATTERY ===== -->
+            <TextBlock Text="{DynamicResource BatteryLabel}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,12"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"
+                                      MinWidth="140"/>
+                </Grid.ColumnDefinitions>
+
+                <ProgressBar Grid.Column="0"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="{Binding BatteryPercent, Mode=OneWay}"
+                             Height="10"
+                             Margin="0,0,8,0"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding BatteryText}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+
+            <!-- ===== CONTROLLER OPTIONS ===== -->
+            <TextBlock Text="{DynamicResource ControllerOptions}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,12"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="64"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Sensitivity}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           VerticalAlignment="Center"/>
+                <Slider Grid.Column="1"
+                        Value="{Binding Sensitivity}"
+                        Minimum="0.1"
+                        Maximum="2.0"
+                        TickFrequency="0.05"
+                        Style="{StaticResource StyleSlider}"
+                        Margin="0,0,8,0"/>
+                <TextBlock Grid.Column="2"
+                           Text="{Binding Sensitivity, StringFormat='{}{0:0.00}x'}"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Vibration}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           VerticalAlignment="Center"/>
+                <CheckBox Grid.Column="1"
+                          Content="{DynamicResource EnableVibration}"
+                          IsChecked="{Binding VibrationEnabled}"
+                          Foreground="{StaticResource BrushTextPrimary}"
+                          VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- ===== REALTIME PREVIEW ===== -->
+            <TextBlock Text="{DynamicResource RealtimePreview}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,10"/>
+
+            <Border Style="{StaticResource StyleGlassCard}"
+                    Margin="0,0,0,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{DynamicResource LeftStickProcessed}"
+                                   Foreground="{StaticResource BrushTextMuted}"
+                                   FontSize="11"
+                                   Margin="0,0,0,6"/>
+                        <views:StickVisualiser StickX="{Binding PreviewLeftStickX}"
+                                               StickY="{Binding PreviewLeftStickY}"
+                                               DeadzoneRadius="{Binding LeftDeadzoneRadius}"/>
+                        <TextBlock Text="{Binding PreviewLeftStickX, StringFormat='X {0:0.00}'}"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   Margin="0,6,0,0"/>
+                        <TextBlock Text="{Binding PreviewLeftStickY, StringFormat='Y {0:0.00}'}"
+                                   Foreground="{StaticResource BrushTextSecondary}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="{DynamicResource RightStickProcessed}"
+                                   Foreground="{StaticResource BrushTextMuted}"
+                                   FontSize="11"
+                                   Margin="0,0,0,6"/>
+                        <views:StickVisualiser StickX="{Binding PreviewRightStickX}"
+                                               StickY="{Binding PreviewRightStickY}"
+                                               DeadzoneRadius="{Binding RightDeadzoneRadius}"/>
+                        <TextBlock Text="{Binding PreviewRightStickX, StringFormat='X {0:0.00}'}"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   Margin="0,6,0,0"/>
+                        <TextBlock Text="{Binding PreviewRightStickY, StringFormat='Y {0:0.00}'}"
+                                   Foreground="{StaticResource BrushTextSecondary}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ===== BUTTONS GRID ===== -->
+            <TextBlock Text="{DynamicResource Buttons}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,10"/>
+
+            <WrapPanel Margin="0,0,0,20">
+                <!-- Each ButtonIndicator shows the button name and lights up when pressed -->
+                <views:ButtonIndicator Label="A"
+                                       IsActive="{Binding A}"
+                                       ActiveColor="#36D67E"/>
+                <views:ButtonIndicator Label="B"
+                                       IsActive="{Binding B}"
+                                       ActiveColor="#E81123"/>
+                <views:ButtonIndicator Label="X"
+                                       IsActive="{Binding X}"
+                                       ActiveColor="#4A8DFF"/>
+                <views:ButtonIndicator Label="Y"
+                                       IsActive="{Binding Y}"
+                                       ActiveColor="#FF8C00"/>
+                <views:ButtonIndicator Label="LB"
+                                       IsActive="{Binding LB}"/>
+                <views:ButtonIndicator Label="RB"
+                                       IsActive="{Binding RB}"/>
+                <views:ButtonIndicator Label="LT"
+                                       IsActive="{Binding LT}"/>
+                <views:ButtonIndicator Label="RT"
+                                       IsActive="{Binding RT}"/>
+                <views:ButtonIndicator Label="Start"
+                                       IsActive="{Binding Start}"/>
+                <views:ButtonIndicator Label="Back"
+                                       IsActive="{Binding Back}"/>
+                <views:ButtonIndicator Label="LS"
+                                       IsActive="{Binding LS}"/>
+                <views:ButtonIndicator Label="RS"
+                                       IsActive="{Binding RS}"/>
+                <views:ButtonIndicator Label="↑"
+                                       IsActive="{Binding DPadUp}"/>
+                <views:ButtonIndicator Label="↓"
+                                       IsActive="{Binding DPadDown}"/>
+                <views:ButtonIndicator Label="←"
+                                       IsActive="{Binding DPadLeft}"/>
+                <views:ButtonIndicator Label="→"
+                                       IsActive="{Binding DPadRight}"/>
+            </WrapPanel>
+
+            <!-- ===== TRIGGERS ===== -->
+            <TextBlock Text="{DynamicResource Triggers}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="LT"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               FontSize="11"
+                               Margin="0,0,0,4"/>
+                    <ProgressBar Value="{Binding LeftTrigger, Mode=OneWay}"
+                                 Minimum="0"
+                                 Maximum="1"
+                                 Height="10"
+                                 Style="{StaticResource StyleTriggerBar}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="RT"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               FontSize="11"
+                               Margin="0,0,0,4"/>
+                    <ProgressBar Value="{Binding RightTrigger, Mode=OneWay}"
+                                 Minimum="0"
+                                 Maximum="1"
+                                 Height="10"
+                                 Style="{StaticResource StyleTriggerBar}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- ===== STICKS ===== -->
+            <TextBlock Text="{DynamicResource Sticks}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left stick visualiser -->
+                <views:StickVisualiser Grid.Column="0"
+                                       StickX="{Binding LeftStickX}"
+                                       StickY="{Binding LeftStickY}"
+                                       DeadzoneRadius="{Binding LeftDeadzoneRadius}"/>
+
+                <!-- Right stick visualiser -->
+                <views:StickVisualiser Grid.Column="2"
+                                       StickX="{Binding RightStickX}"
+                                       StickY="{Binding RightStickY}"
+                                       DeadzoneRadius="{Binding RightDeadzoneRadius}"/>
+            </Grid>
+
+            <!-- ===== DEADZONE ===== -->
+            <TextBlock Text="{DynamicResource Deadzone}"
+                       Style="{StaticResource StyleSectionHeader}"
+                       Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="14"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="44"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="{DynamicResource DeadzoneLeftStick}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           VerticalAlignment="Center"/>
+                <Slider Grid.Row="0"
+                        Grid.Column="1"
+                        Value="{Binding LeftInnerDeadzone}"
+                        Minimum="0"
+                        Maximum="0.5"
+                        TickFrequency="0.01"
+                        Style="{StaticResource StyleSlider}"
+                        Margin="0,0,8,0"/>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="2"
+                           Text="{Binding LeftInnerDeadzone, StringFormat='{}{0:0.00}'}"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           VerticalAlignment="Center"
+                           FontSize="11"/>
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Text="{DynamicResource DeadzoneRightStick}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           VerticalAlignment="Center"/>
+                <Slider Grid.Row="2"
+                        Grid.Column="1"
+                        Value="{Binding RightInnerDeadzone}"
+                        Minimum="0"
+                        Maximum="0.5"
+                        TickFrequency="0.01"
+                        Style="{StaticResource StyleSlider}"
+                        Margin="0,0,8,0"/>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="2"
+                           Text="{Binding RightInnerDeadzone, StringFormat='{}{0:0.00}'}"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           VerticalAlignment="Center"
+                           FontSize="11"/>
+
+                <Button Grid.Row="4"
+                        Grid.ColumnSpan="3"
+                        Content="{DynamicResource AutoCalibrateDeadzone}"
+                        Command="{Binding AutoCalibrateDeadzoneCommand}"
+                        Style="{StaticResource StyleSecondaryButton}"
+                        HorizontalAlignment="Left"
+                        Padding="14,7"/>
+
+                <TextBlock Grid.Row="5"
+                           Grid.ColumnSpan="3"
+                           Margin="0,8,0,0"
+                           Text="{Binding DeadzoneCalibrationStatus}"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           FontSize="11"/>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

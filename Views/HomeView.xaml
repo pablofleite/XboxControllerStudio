@@ -1,0 +1,155 @@
+<UserControl x:Class="XboxControllerStudio.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:XboxControllerStudio.ViewModels"
+             Background="{StaticResource BrushBackground}">
+
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="{DynamicResource HomeTitle}"
+                   Style="{StaticResource StylePageHeader}"/>
+
+        <Border Grid.Row="1"
+                Margin="0,18,0,24"
+                Style="{StaticResource StyleGlassCard}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Rectangle Grid.ColumnSpan="2"
+                           Fill="{StaticResource BrushAccentHalo}"
+                           RadiusX="14"
+                           RadiusY="14"/>
+
+                <TextBlock Grid.Column="0"
+                           Text="&#xE7FC;"
+                           FontFamily="Segoe MDL2 Assets"
+                           FontSize="28"
+                           Foreground="{StaticResource BrushAccentGlow}"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1"
+                            Margin="14,0,0,0">
+                    <TextBlock Text="{DynamicResource ConnectedControllers}"
+                               Style="{StaticResource StylePageSubtitle}"/>
+                    <TextBlock Text="{Binding ConnectedSummary}"
+                               Foreground="{StaticResource BrushTextHeading}"
+                               FontSize="26"
+                               FontWeight="SemiBold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Controllers}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:ControllerViewModel}">
+                        <Border Margin="0,0,14,14"
+                                Padding="16"
+                                Style="{StaticResource StyleGlassCard}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <TextBlock Text="{Binding Title}"
+                                               Foreground="{StaticResource BrushTextPrimary}"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                    <Border DockPanel.Dock="Right"
+                                            CornerRadius="12"
+                                            Padding="10,3"
+                                            Background="{StaticResource BrushAccentDim}">
+                                        <TextBlock Foreground="{StaticResource BrushAccentGlow}"
+                                                   FontSize="11"
+                                                   FontWeight="SemiBold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text"
+                                                            Value="{DynamicResource StatusDisconnected}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsConnected}"
+                                                                     Value="True">
+                                                            <Setter Property="Text"
+                                                                    Value="{DynamicResource StatusConnected}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                </DockPanel>
+
+                                <Grid Grid.Row="1"
+                                      Margin="0,12,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{DynamicResource ConnectionLabel}"
+                                               Style="{StaticResource StyleSectionHeader}"/>
+                                    <TextBlock Grid.Column="1"
+                                               Margin="10,0,0,0"
+                                               Text="{Binding ConnectionType}"
+                                               Foreground="{StaticResource BrushTextSecondary}"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2"
+                                      Margin="0,10,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0"
+                                          Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{DynamicResource BatteryLabel}"
+                                                   Style="{StaticResource StyleSectionHeader}"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="10,0,0,0"
+                                                   Text="{Binding BatteryText}"
+                                                   Foreground="{StaticResource BrushTextSecondary}"
+                                                   FontSize="13"
+                                                   FontWeight="SemiBold"/>
+                                    </Grid>
+
+                                    <ProgressBar Grid.Row="1"
+                                                 Minimum="0"
+                                                 Maximum="100"
+                                                 Height="10"
+                                                 Value="{Binding BatteryPercent, Mode=OneWay}"
+                                                 Style="{StaticResource StyleTriggerBar}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

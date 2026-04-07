@@ -1,0 +1,227 @@
+<Window x:Class="XboxControllerStudio.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:XboxControllerStudio.Views"
+        xmlns:vm="clr-namespace:XboxControllerStudio.ViewModels"
+        Title="Xbox Controller Studio"
+        Icon="/Resources/Icons/app-icon.ico"
+        Width="1100"
+        Height="700"
+        MinWidth="860"
+        MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushBackgroundGradient}"
+        FontFamily="Bahnschrift">
+
+    <!-- DataTemplates: map each ViewModel type to its View -->
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+            <views:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ControllersViewModel}">
+            <views:ControllersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProfilesViewModel}">
+            <views:ProfilesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Sidebar: fixed width -->
+            <ColumnDefinition Width="232"/>
+            <!-- Separator line -->
+            <ColumnDefinition Width="1"/>
+            <!-- Main content area -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===================== SIDEBAR ===================== -->
+        <Border Grid.Column="0"
+                Background="{StaticResource BrushSidebarGradient}">
+            <DockPanel>
+                <!-- App logo / title -->
+                <Border DockPanel.Dock="Top"
+                        Padding="20,26,20,18">
+                    <StackPanel>
+                        <TextBlock Text="&#xE7FC;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="34"
+                                   Foreground="{StaticResource BrushAccentGlow}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Xbox Controller Studio"
+                                   Style="{StaticResource StyleAppTitle}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Margin="0,8,0,0"/>
+                        <TextBlock Text="Input Mapping Hub"
+                                   Foreground="{StaticResource BrushTextMuted}"
+                                   HorizontalAlignment="Center"
+                                   FontSize="11"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Navigation buttons -->
+                <StackPanel DockPanel.Dock="Top"
+                            Margin="0,12,0,0">
+                    <Button Content="{DynamicResource NavHome}"
+                            Command="{Binding NavigateHomeCommand}"
+                            Tag="&#xE80F;">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource StyleNavButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsHomeActive}"
+                                                 Value="True">
+                                        <Setter Property="Background"
+                                                Value="{StaticResource BrushAccentDim}"/>
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushAccentGlow}"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect BlurRadius="16"
+                                                                  ShadowDepth="0"
+                                                                  Color="#994A8DFF"
+                                                                  Opacity="1"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="{DynamicResource NavControllers}"
+                            Command="{Binding NavigateControllersCommand}"
+                            Tag="&#xE7FC;">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource StyleNavButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsControllersActive}"
+                                                 Value="True">
+                                        <Setter Property="Background"
+                                                Value="{StaticResource BrushAccentDim}"/>
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushAccentGlow}"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect BlurRadius="16"
+                                                                  ShadowDepth="0"
+                                                                  Color="#994A8DFF"
+                                                                  Opacity="1"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="{DynamicResource NavProfiles}"
+                            Command="{Binding NavigateProfilesCommand}"
+                            Tag="&#xE734;">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource StyleNavButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsProfilesActive}"
+                                                 Value="True">
+                                        <Setter Property="Background"
+                                                Value="{StaticResource BrushAccentDim}"/>
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushAccentGlow}"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect BlurRadius="16"
+                                                                  ShadowDepth="0"
+                                                                  Color="#994A8DFF"
+                                                                  Opacity="1"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="{DynamicResource NavSettings}"
+                            Command="{Binding NavigateSettingsCommand}"
+                            Tag="&#xE713;">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource StyleNavButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsSettingsActive}"
+                                                 Value="True">
+                                        <Setter Property="Background"
+                                                Value="{StaticResource BrushAccentDim}"/>
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushAccentGlow}"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect BlurRadius="16"
+                                                                  ShadowDepth="0"
+                                                                  Color="#994A8DFF"
+                                                                  Opacity="1"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+
+                <!-- Version stamp at the bottom -->
+                <TextBlock DockPanel.Dock="Bottom"
+                           Text="v0.1.0-alpha"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           FontSize="11"
+                           Margin="20,0,20,12"
+                           VerticalAlignment="Bottom"/>
+            </DockPanel>
+        </Border>
+
+        <!-- Separator -->
+        <Border Grid.Column="1"
+                Background="{StaticResource BrushSeparator}"/>
+
+        <!-- ===================== CONTENT AREA ===================== -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="34"/>
+            </Grid.RowDefinitions>
+
+            <!-- ContentControl uses the DataTemplates above to swap pages -->
+            <Grid Grid.Row="0">
+                <Ellipse Width="380"
+                         Height="380"
+                         Fill="{StaticResource BrushAccentHalo}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,-140,-120,0"
+                         IsHitTestVisible="False"/>
+
+                <ContentControl x:Name="MainContentHost"
+                                Content="{Binding CurrentPage}"
+                                Focusable="False"/>
+            </Grid>
+
+            <!-- Notification strip -->
+            <Border Grid.Row="1"
+                    Background="{StaticResource BrushCardGradient}"
+                    BorderBrush="{StaticResource BrushSeparator}"
+                    BorderThickness="0,1,0,0"
+                    Padding="12,0">
+                <TextBlock Text="{Binding LatestNotification}"
+                           Foreground="{StaticResource BrushTextSecondary}"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           TextTrimming="CharacterEllipsis"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

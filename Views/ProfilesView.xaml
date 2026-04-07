@@ -1,0 +1,235 @@
+<UserControl x:Class="XboxControllerStudio.Views.ProfilesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:XboxControllerStudio.ViewModels"
+             xmlns:models="clr-namespace:XboxControllerStudio.Models"
+             PreviewMouseDown="ProfilesView_OnPreviewMouseDown"
+             Background="{StaticResource BrushBackground}">
+
+        <Grid Margin="28,24,28,24">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <TextBlock Grid.Row="0"
+                           Text="{DynamicResource ProfilesTitle}"
+                           Style="{StaticResource StylePageHeader}"
+                           Margin="0,0,0,18"/>
+
+                <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="280"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0"
+                                Style="{StaticResource StyleGlassCard}">
+                                <DockPanel>
+                                        <StackPanel DockPanel.Dock="Top"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,0,0,10">
+                                                <Button Content="{DynamicResource ProfilesNewButton}"
+                                                        Command="{Binding AddProfileCommand}"
+                                                        Style="{StaticResource StylePrimaryButton}"/>
+                                                <Button Content="{DynamicResource ProfilesDeleteButton}"
+                                                        Command="{Binding RemoveProfileCommand}"
+                                                        CommandParameter="{Binding ActiveProfile}"
+                                                        Style="{StaticResource StyleSecondaryButton}"
+                                                        Margin="8,0,0,0"/>
+                                        </StackPanel>
+
+                                        <ListBox ItemsSource="{Binding Profiles}"
+                                                 SelectedItem="{Binding ActiveProfile}"
+                                                 DisplayMemberPath="Name"
+                                                 Style="{StaticResource StyleControllerList}"/>
+                                </DockPanel>
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                Style="{StaticResource StyleGlassCard}">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0"
+                                              Margin="0,0,0,14">
+                                                <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0"
+                                                            Margin="0,0,8,0">
+                                                        <TextBlock Text="{DynamicResource ProfilesProfileName}"
+                                                                   Style="{StaticResource StyleSectionHeader}"
+                                                                   Margin="0,0,0,6"/>
+                                                        <TextBox Text="{Binding ActiveProfile.Name, UpdateSourceTrigger=PropertyChanged}"
+                                                                 IsReadOnly="{Binding ActiveProfile.IsReadOnly}"
+                                                                 Background="{StaticResource BrushSurface}"
+                                                                 Foreground="{StaticResource BrushTextPrimary}"
+                                                                 BorderBrush="{StaticResource BrushSeparator}"
+                                                                 Padding="8,6"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1"
+                                                            Margin="8,0,0,0">
+                                                        <TextBlock Text="{DynamicResource ProfilesGameExecutable}"
+                                                                   Style="{StaticResource StyleSectionHeader}"
+                                                                   Margin="0,0,0,6"/>
+                                                        <TextBox Text="{Binding ActiveProfile.TargetProcess, UpdateSourceTrigger=PropertyChanged}"
+                                                                 IsReadOnly="{Binding ActiveProfile.IsReadOnly}"
+                                                                 Background="{StaticResource BrushSurface}"
+                                                                 Foreground="{StaticResource BrushTextPrimary}"
+                                                                 BorderBrush="{StaticResource BrushSeparator}"
+                                                                 Padding="8,6"/>
+                                                </StackPanel>
+                                        </Grid>
+
+                                        <StackPanel Grid.Row="1"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,0,0,10">
+                                                <Button x:Name="CaptureInputButton"
+                                                        Content="{DynamicResource ProfilesCaptureInput}"
+                                                        Command="{Binding StartCaptureCommand}"
+                                                        Click="CaptureInputButton_OnClick"
+                                                        Style="{StaticResource StylePrimaryButton}"/>
+                                                <Button Content="{DynamicResource ProfilesClearMapping}"
+                                                        Command="{Binding ClearSelectedMappingCommand}"
+                                                        Style="{StaticResource StyleSecondaryButton}"
+                                                        Margin="8,0,0,0"/>
+                                                <Button Content="{DynamicResource ProfilesSaveProfile}"
+                                                        Command="{Binding SaveProfileCommand}"
+                                                        Style="{StaticResource StyleSecondaryButton}"
+                                                        Margin="8,0,0,0"/>
+                                        </StackPanel>
+
+                                        <Border Grid.Row="2"
+                                                CornerRadius="8"
+                                                Padding="10,8"
+                                                Margin="0,0,0,10"
+                                                Background="#1A00A8E8"
+                                                BorderBrush="#3300A8E8"
+                                                BorderThickness="1">
+                                                <StackPanel>
+                                                        <CheckBox IsChecked="{Binding ActiveProfile.UseRightStickAsMouse, UpdateSourceTrigger=PropertyChanged}"
+                                                                  IsEnabled="{Binding CanEditActiveProfile}"
+                                                                  Foreground="{StaticResource BrushTextPrimary}"
+                                                                  Content="{DynamicResource ProfilesMouseMoveEnabled}"/>
+                                                        <Grid Margin="0,8,0,0">
+                                                                <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="Auto"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0"
+                                                                           VerticalAlignment="Center"
+                                                                           Text="{DynamicResource ProfilesMouseSensitivity}"
+                                                                           Style="{StaticResource StyleSectionHeader}"/>
+                                                                <Slider Grid.Column="1"
+                                                                        Margin="10,0,0,0"
+                                                                        Minimum="1"
+                                                                        Maximum="40"
+                                                                        TickFrequency="1"
+                                                                        IsSnapToTickEnabled="True"
+                                                                        IsEnabled="{Binding CanEditActiveProfile}"
+                                                                        Value="{Binding ActiveProfile.RightStickMouseSensitivity, UpdateSourceTrigger=PropertyChanged}"/>
+                                                        </Grid>
+                                                </StackPanel>
+                                        </Border>
+
+                                        <DataGrid x:Name="MappingsGrid"
+                                                  Grid.Row="3"
+                                                  ItemsSource="{Binding ActiveMappings}"
+                                                  SelectedItem="{Binding SelectedMapping}"
+                                                  AutoGenerateColumns="False"
+                                                  SelectionUnit="FullRow"
+                                                  CanUserAddRows="False"
+                                                  HeadersVisibility="Column"
+                                                  Background="#FFF7F8FC"
+                                                  Foreground="#FF101010"
+                                                  BorderBrush="{StaticResource BrushSeparator}"
+                                                  GridLinesVisibility="All"
+                                                  VerticalGridLinesBrush="#FFD1D8EA"
+                                                  HorizontalGridLinesBrush="#FFDDE3F2"
+                                                  PreviewKeyDown="MappingsGrid_OnPreviewKeyDown"
+                                                  RowHeaderWidth="0">
+                                                <DataGrid.Resources>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                                <Setter Property="Background"
+                                                                        Value="#FFE8EDF8"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="#FF101010"/>
+                                                                <Setter Property="FontWeight"
+                                                                        Value="SemiBold"/>
+                                                                <Setter Property="BorderBrush"
+                                                                        Value="#FFCFD7EA"/>
+                                                        </Style>
+                                                        <Style TargetType="DataGridCell">
+                                                                <Setter Property="Background"
+                                                                        Value="#FFFFFFFF"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="#FF101010"/>
+                                                                <Setter Property="BorderBrush"
+                                                                        Value="#FFE1E6F2"/>
+                                                                <Style.Triggers>
+                                                                        <Trigger Property="IsSelected"
+                                                                                 Value="True">
+                                                                                <Setter Property="Background"
+                                                                                        Value="#FF2E5FB7"/>
+                                                                                <Setter Property="Foreground"
+                                                                                        Value="#FFFFFFFF"/>
+                                                                                <Setter Property="BorderBrush"
+                                                                                        Value="#FF1E4EA3"/>
+                                                                        </Trigger>
+                                                                </Style.Triggers>
+                                                        </Style>
+                                                        <Style TargetType="DataGridRow">
+                                                                <Setter Property="Background"
+                                                                        Value="#FFFFFFFF"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="#FF101010"/>
+                                                                <Style.Triggers>
+                                                                        <Trigger Property="IsSelected"
+                                                                                 Value="True">
+                                                                                <Setter Property="Background"
+                                                                                        Value="#FF2E5FB7"/>
+                                                                                <Setter Property="Foreground"
+                                                                                        Value="#FFFFFFFF"/>
+                                                                                <Setter Property="FontWeight"
+                                                                                        Value="SemiBold"/>
+                                                                        </Trigger>
+                                                                </Style.Triggers>
+                                                        </Style>
+                                                </DataGrid.Resources>
+                                                <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="{DynamicResource ProfilesGridButton}"
+                                                                            Width="160"
+                                                                            IsReadOnly="True"
+                                                                            Binding="{Binding Button}"/>
+                                                        <DataGridTextColumn Header="{DynamicResource ProfilesGridAssignedInput}"
+                                                                            Width="220"
+                                                                            IsReadOnly="True"
+                                                                            Binding="{Binding AssignedInput}"/>
+                                                        <DataGridTextColumn Header="{DynamicResource ProfilesGridPreview}"
+                                                                            Width="*"
+                                                                            IsReadOnly="True"
+                                                                            Binding="{Binding Label}"/>
+                                                </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <TextBlock Grid.Row="4"
+                                                   Margin="0,10,0,0"
+                                                   Text="{Binding StatusMessage}"
+                                                   Foreground="{StaticResource BrushTextMuted}"/>
+                                </Grid>
+                        </Border>
+                </Grid>
+        </Grid>
+</UserControl>

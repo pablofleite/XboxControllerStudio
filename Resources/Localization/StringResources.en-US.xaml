@@ -1,0 +1,168 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Shell -->
+    <sys:String x:Key="NavHome"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Home</sys:String>
+    <sys:String x:Key="NavControllers"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controllers</sys:String>
+    <sys:String x:Key="NavProfiles"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profiles</sys:String>
+    <sys:String x:Key="NavSettings"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Settings</sys:String>
+    <sys:String x:Key="NoAlerts"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">No alerts.</sys:String>
+    <sys:String x:Key="TrayOpen"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Open</sys:String>
+    <sys:String x:Key="TrayExit"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Exit</sys:String>
+    <sys:String x:Key="TrayTooltip"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Xbox Controller Studio</sys:String>
+    <sys:String x:Key="LowBatteryThresholdSet"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Low battery threshold set to {0}%.</sys:String>
+    <sys:String x:Key="LowBatteryAlert"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller {0}: low battery ({1}%). Threshold: {2}%</sys:String>
+
+    <!-- Home -->
+    <sys:String x:Key="HomeTitle"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Home</sys:String>
+    <sys:String x:Key="ConnectedControllers"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Connected Controllers</sys:String>
+    <sys:String x:Key="ConnectedSummaryFormat"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">{0} online</sys:String>
+    <sys:String x:Key="ConnectionLabel"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Connection</sys:String>
+    <sys:String x:Key="ControllerTitleFormat"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller {0}</sys:String>
+    <sys:String x:Key="ConnectionTypeOffline"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Offline</sys:String>
+    <sys:String x:Key="ConnectionTypeUsb"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">USB</sys:String>
+    <sys:String x:Key="ConnectionTypeBluetooth"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Bluetooth</sys:String>
+    <sys:String x:Key="ConnectionTypeWireless"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Wireless</sys:String>
+    <sys:String x:Key="BatteryTextDisconnected"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Disconnected</sys:String>
+    <sys:String x:Key="BatteryTextWired"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Wired</sys:String>
+    <sys:String x:Key="BatteryTextUnavailable"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Battery Unavailable</sys:String>
+    <sys:String x:Key="BatteryTextNotAvailable"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">N/A</sys:String>
+
+    <!-- Controllers page -->
+    <sys:String x:Key="ControllerSettingsTitle"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller Settings</sys:String>
+    <sys:String x:Key="ControllerSettingsSubtitle"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Tune deadzone, sensitivity and vibration in realtime.</sys:String>
+    <sys:String x:Key="StatusConnected"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Connected</sys:String>
+    <sys:String x:Key="StatusDisconnected"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Disconnected</sys:String>
+    <sys:String x:Key="BatteryLabel"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Battery</sys:String>
+    <sys:String x:Key="ControllerOptions"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller Options</sys:String>
+    <sys:String x:Key="Sensitivity"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Sensitivity</sys:String>
+    <sys:String x:Key="Vibration"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Vibration</sys:String>
+    <sys:String x:Key="EnableVibration"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Enable vibration</sys:String>
+    <sys:String x:Key="RealtimePreview"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Realtime Preview</sys:String>
+    <sys:String x:Key="LeftStickProcessed"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Left Stick (Processed)</sys:String>
+    <sys:String x:Key="RightStickProcessed"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Right Stick (Processed)</sys:String>
+    <sys:String x:Key="Buttons"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Buttons</sys:String>
+    <sys:String x:Key="Triggers"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Triggers</sys:String>
+    <sys:String x:Key="Sticks"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Sticks</sys:String>
+    <sys:String x:Key="Deadzone"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Deadzone</sys:String>
+    <sys:String x:Key="DeadzoneLeftStick"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Left Stick</sys:String>
+    <sys:String x:Key="DeadzoneRightStick"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Right Stick</sys:String>
+    <sys:String x:Key="AutoCalibrateDeadzone"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Auto Calibrate Deadzone</sys:String>
+    <sys:String x:Key="DeadzoneStatusManual"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Manual tuning</sys:String>
+    <sys:String x:Key="DeadzoneStatusCalibrating"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Calibrating... keep sticks untouched (2.5s)</sys:String>
+    <sys:String x:Key="DeadzoneStatusAutoCalibrated"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Auto calibrated - L: {0:0.00} / R: {1:0.00}</sys:String>
+
+    <!-- Profiles -->
+    <sys:String x:Key="ProfilesTitle"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profiles</sys:String>
+    <sys:String x:Key="ProfilesNewButton"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">+ New</sys:String>
+    <sys:String x:Key="ProfilesDeleteButton"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Delete</sys:String>
+    <sys:String x:Key="ProfilesProfileName"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profile Name</sys:String>
+    <sys:String x:Key="ProfilesGameExecutable"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Game Executable (Per-game)</sys:String>
+    <sys:String x:Key="ProfilesAddMapping"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">+ Add Mapping</sys:String>
+    <sys:String x:Key="ProfilesRemoveMapping"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Remove Mapping</sys:String>
+    <sys:String x:Key="ProfilesCaptureInput"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Capture Input</sys:String>
+    <sys:String x:Key="ProfilesDefaultName"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Default</sys:String>
+    <sys:String x:Key="ProfilesNewProfileName"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profile {0}</sys:String>
+    <sys:String x:Key="ProfilesClearMapping"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Clear Mapping</sys:String>
+    <sys:String x:Key="ProfilesSaveProfile"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Save Profile</sys:String>
+    <sys:String x:Key="ProfilesMouseMoveEnabled"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Use right stick to move mouse</sys:String>
+    <sys:String x:Key="ProfilesMouseSensitivity"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Mouse sensitivity</sys:String>
+    <sys:String x:Key="ProfilesGridButton"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Button</sys:String>
+    <sys:String x:Key="ProfilesGridVirtualKey"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Virtual Key (hex)</sys:String>
+    <sys:String x:Key="ProfilesGridAssignedInput"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Assigned Input</sys:String>
+    <sys:String x:Key="ProfilesGridPreview"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Preview</sys:String>
+    <sys:String x:Key="ProfilesReady"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Ready</sys:String>
+    <sys:String x:Key="ProfilesRemoved"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profile removed.</sys:String>
+    <sys:String x:Key="ProfilesSavedAt"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Profile '{0}' saved at {1:HH:mm:ss}.</sys:String>
+    <sys:String x:Key="ProfilesCaptureHint"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Click Capture Input and press a key or mouse button to map the selected controller button.</sys:String>
+    <sys:String x:Key="ProfilesCaptureDone"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Mapped {0} to {1}.</sys:String>
+    <sys:String x:Key="ProfilesCaptureCleared"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Mapping cleared.</sys:String>
+    <sys:String x:Key="ProfilesDefaultLockedHint"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Default profile is read-only. Create a new profile to edit mappings.</sys:String>
+
+    <!-- Settings -->
+    <sys:String x:Key="SettingsTitle"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Settings</sys:String>
+    <sys:String x:Key="Language"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Language</sys:String>
+    <sys:String x:Key="PollingInterval"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Polling Interval (ms)</sys:String>
+    <sys:String x:Key="LowBatteryNotification"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Low Battery Notification</sys:String>
+    <sys:String x:Key="EnableLowBatteryNotifications"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Enable low battery notifications</sys:String>
+    <sys:String x:Key="StartWithWindows"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Start with Windows</sys:String>
+    <sys:String x:Key="MinimizeToTray"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Minimize to tray</sys:String>
+
+</ResourceDictionary>

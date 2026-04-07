@@ -1,0 +1,16 @@
+<Application x:Class="XboxControllerStudio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Dark theme colors and base styles -->
+                <ResourceDictionary Source="Resources/DarkTheme.xaml"/>
+                <!-- Reusable control styles -->
+                <ResourceDictionary Source="Resources/ControlStyles.xaml"/>
+                <!-- Default UI language -->
+                <ResourceDictionary Source="Resources/Localization/StringResources.en-US.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,96 @@
+<UserControl x:Class="XboxControllerStudio.Views.ControllersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:XboxControllerStudio.ViewModels"
+             xmlns:views="clr-namespace:XboxControllerStudio.Views"
+             Background="{StaticResource BrushBackground}">
+
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Page header -->
+        <TextBlock Grid.Row="0"
+                   Text="{DynamicResource ControllerSettingsTitle}"
+                   Style="{StaticResource StylePageHeader}"
+                   Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="1"
+                   Text="{DynamicResource ControllerSettingsSubtitle}"
+                   Style="{StaticResource StylePageSubtitle}"
+                   Margin="0,0,0,20"/>
+
+        <!-- Two-column layout: list on the left, detail on the right -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Controller slot list -->
+            <Border Grid.Column="0"
+                    Style="{StaticResource StyleGlassCard}">
+                <ListBox ItemsSource="{Binding Controllers}"
+                         SelectedItem="{Binding SelectedController}"
+                         Style="{StaticResource StyleControllerList}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:ControllerViewModel}">
+                            <Grid Margin="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Ellipse Width="8"
+                                         Height="8"
+                                         VerticalAlignment="Center"
+                                         Margin="0,0,10,0">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill"
+                                                    Value="{StaticResource BrushTextMuted}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}"
+                                                             Value="True">
+                                                    <Setter Property="Fill"
+                                                            Value="{StaticResource BrushConnected}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Title}"
+                                               Foreground="{StaticResource BrushTextPrimary}"/>
+                                    <TextBlock Text="{Binding ConnectionType}"
+                                               Foreground="{StaticResource BrushTextMuted}"
+                                               FontSize="11"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding BatteryText}"
+                                           Foreground="{StaticResource BrushTextSecondary}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Detail panel for the selected controller -->
+            <ContentControl Grid.Column="2"
+                            Content="{Binding SelectedController}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate DataType="{x:Type vm:ControllerViewModel}">
+                        <views:ControllerDetailView/>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Grid>
+    </Grid>
+</UserControl>
