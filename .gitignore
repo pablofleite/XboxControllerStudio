@@ -11,9 +11,6 @@ obj/
 # VS Code
 .vscode/
 
-# GitHub metadata
-.github/
-
 # Rider / JetBrains
 .idea/
 
@@ -31,3 +28,6 @@ Desktop.ini
 
 # Generated local config
 appsettings.Development.json
+
+# Local publish output
+publish/

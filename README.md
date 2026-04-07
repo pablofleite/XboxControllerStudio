@@ -46,6 +46,38 @@ dotnet build
 dotnet run
 ```
 
+## Build Executable (Local)
+
+To generate a distributable executable for Windows x64:
+
+```powershell
+dotnet publish XboxControllerStudio.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:PublishTrimmed=false -o publish/win-x64
+```
+
+The output will be available in:
+
+- `publish/win-x64`
+
+You can zip this folder and share it with end users.
+
+## GitHub Releases (Automatic)
+
+This repository includes a GitHub Actions workflow at `.github/workflows/release.yml` that:
+
+- builds the app on Windows
+- publishes a self-contained win-x64 executable
+- generates `XboxControllerStudio-win-x64.zip`
+- creates a GitHub Release and uploads the zip file
+
+To publish a new release:
+
+```powershell
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Use semantic version tags (`vMAJOR.MINOR.PATCH`) like `v1.0.0`.
+
 ## Architecture Notes
 
 The project follows MVVM with clear separation of concerns:
