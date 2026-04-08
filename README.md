@@ -1,44 +1,65 @@
 # Xbox Controller Studio
 
-Open-source Windows desktop app (C# + WPF + MVVM) for Xbox controller monitoring, profile-based mapping, and low-latency input-to-keyboard/mouse actions.
+[![Build](https://github.com/pablofleite/XboxControllerStudio/actions/workflows/release.yml/badge.svg)](https://github.com/pablofleite/XboxControllerStudio/actions/workflows/release.yml)
+[![Latest Release](https://img.shields.io/github/v/release/pablofleite/XboxControllerStudio)](https://github.com/pablofleite/XboxControllerStudio/releases)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6)](https://www.microsoft.com/windows)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/badge/License-Open%20Source-brightgreen)](https://github.com/pablofleite/XboxControllerStudio)
 
-## What This Project Does
+Xbox Controller Studio is an open-source Windows desktop app for people who want full visibility and control of their Xbox controller input.
 
-Xbox Controller Studio is built to be a practical control center for Xbox controllers on Windows 10/11. It focuses on real-time input visibility, customizable mapping profiles, and a clean desktop experience suitable for gaming and productivity workflows.
+It combines real-time monitoring, battery tracking, deadzone tuning, and profile-based input mapping in a single WPF app designed for low-latency workflows.
 
-## Key Features
+## Why Use It
 
-- Real-time controller polling using XInput.
-- Live dashboard showing connection status and battery information.
-- Deadzone tuning and sensitivity controls.
-- Button mapping from controller input to keyboard keys and mouse buttons.
-- Optional right-stick-to-mouse movement with adjustable sensitivity.
-- Profile management with per-game target executable support.
-- Runtime localization support (English and Brazilian Portuguese).
-- System tray integration (minimize to tray, quick open/exit).
-- Low battery notifications with configurable threshold.
+- See controller state and battery data in real time.
+- Tune analog stick deadzones and sensitivity with immediate feedback.
+- Map controller input to keyboard and mouse for game and productivity setups.
+- Keep multiple profiles and switch quickly based on your target executable.
+- Get low-battery alerts and tray integration for background usage.
+
+## Preview
+
+> Screenshots are expected in `/assets/images`.
+
+![Home](assets/images/home.png)
+![Controllers](assets/images/controllers.png)
+![Profiles](assets/images/profiles.png)
+![Settings](assets/images/settings.png)
+
+## Feature Highlights
+
+- Real-time polling powered by XInput.
+- Live connection and battery status per controller slot.
+- Deadzone calibration and sensitivity controls.
+- Button-to-keyboard and button-to-mouse mapping.
+- Optional right-stick mouse movement.
+- Runtime localization with support for integrating multiple languages (currently English and Brazilian Portuguese).
+- Minimize-to-tray and quick open/exit tray actions.
 
 ## Tech Stack
 
-- .NET 8
+- C# / .NET 8
 - WPF
-- MVVM architecture
+- MVVM
 - Win32 APIs (XInput and SendInput)
 
-## Project Structure
+## Project Layout
 
-- `Views` - WPF views and visual layout
-- `ViewModels` - UI state, commands, interaction logic
-- `Models` - domain/data models
-- `Services` - integrations (XInput, SendInput, localization, polling)
-- `Core` - reusable logic and infrastructure helpers
+- `Views`: WPF pages and controls.
+- `ViewModels`: UI state, commands, and page logic.
+- `Models`: domain and state models.
+- `Services`: integrations (input, localization, polling).
+- `Core`: shared infrastructure and processing logic.
 
-## Requirements
+## Quick Start
 
-- Windows 10 or Windows 11
+### Requirements
+
+- Windows 10 or 11
 - .NET SDK 8.0+
 
-## Getting Started
+### Run Locally
 
 ```powershell
 dotnet restore
@@ -46,56 +67,63 @@ dotnet build
 dotnet run
 ```
 
-## Build Executable (Local)
-
-To generate a distributable executable for Windows x64:
+### Build a Local Release
 
 ```powershell
 dotnet publish XboxControllerStudio.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:PublishTrimmed=false -o publish/win-x64
 ```
 
-The output will be available in:
+Output: `publish/win-x64`
 
-- `publish/win-x64`
+## Release Process
 
-You can zip this folder and share it with end users.
+GitHub Actions builds and publishes `XboxControllerStudio-win-x64.zip` on version tags.
 
-## GitHub Releases (Automatic)
-
-This repository includes a GitHub Actions workflow at `.github/workflows/release.yml` that:
-
-- builds the app on Windows
-- publishes a self-contained win-x64 executable
-- generates `XboxControllerStudio-win-x64.zip`
-- creates a GitHub Release and uploads the zip file
-
-To publish a new release:
+- Tag format: `vMAJOR.MINOR.PATCH` (example: `v1.0.0`)
+- Release source: tag commit must be in `main`
 
 ```powershell
 git tag v0.1.0
 git push origin v0.1.0
 ```
 
-Use semantic version tags (`vMAJOR.MINOR.PATCH`) like `v1.0.0`.
+## Contributing
 
-## Architecture Notes
+Contributions are very welcome, especially in areas that improve reliability, UX, and input compatibility.
 
-The project follows MVVM with clear separation of concerns:
+### Great First Contributions
 
-- UI and visual behavior in `Views`
-- UI state and commands in `ViewModels`
-- Input integrations and external APIs in `Services`
-- Shared processing logic in `Core`
+- Improve edge-case battery detection and messaging.
+- Add tests for deadzone and mapping processors.
+- Polish keyboard/mouse mapping UX.
+- Expand localization coverage and wording quality.
+- Improve docs and onboarding for new contributors.
 
-## Current Limitations
+### Development Workflow
 
-- XInput is the primary controller API.
-- No virtual controller emulation layer is included.
-- Some Bluetooth battery scenarios rely on best-effort fallbacks.
+```powershell
+git checkout -b feat/your-change
+dotnet restore
+dotnet build
+dotnet run
+```
 
-## Open Source Roadmap
+When opening a PR:
 
-- Improve profile import/export and sharing.
-- Add automated tests for core input/mapping flows.
-- Expand localization coverage and contributor docs.
-- Provide packaged releases and installer workflow.
+- Keep changes focused and well described.
+- Include screenshots or short clips for UI changes.
+- Mention any behavior changes and migration notes.
+
+## Roadmap
+
+- [ ] Profile import/export and sharing flow
+- [ ] Automated tests for core input and mapping logic
+- [ ] Better Bluetooth battery reporting fallbacks
+- [ ] Optional installer/package distribution
+- [ ] Expanded accessibility and localization improvements
+
+## Known Limitations
+
+- XInput is currently the primary controller API.
+- Virtual controller emulation is not included.
+- Some Bluetooth battery scenarios use best-effort fallbacks.
