@@ -21,7 +21,7 @@
     <sys:String x:Key="LowBatteryThresholdSet"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Limite de bateria fraca ajustado para {0}%.</sys:String>
     <sys:String x:Key="LowBatteryAlert"
-                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controle {0}: bateria fraca ({1}%). Limite: {2}%</sys:String>
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controle {0}: bateria fraca.</sys:String>
 
     <!-- Home -->
     <sys:String x:Key="HomeTitle"

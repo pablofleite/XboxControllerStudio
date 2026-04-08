@@ -53,6 +53,8 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand NavigateProfilesCommand { get; }
     public RelayCommand NavigateSettingsCommand { get; }
 
+    public event Action<string, string>? NotificationRaised;
+
     public MainViewModel(InputPollingService polling, SendInputService sendInput, LocalizationService localization)
     {
         _localization = localization;
@@ -61,7 +63,7 @@ public sealed class MainViewModel : ObservableObject
         Home = new HomeViewModel(Controllers);
         Profiles = new ProfilesViewModel();
 
-        Controllers.LowBatteryAlertRaised += msg => LatestNotification = msg;
+        Controllers.LowBatteryAlertRaised += msg => PublishNotification(GetString("LowBatteryNotification", "Low Battery Notification"), msg);
         Profiles.ActiveProfileApplied += profile => Controllers.ApplyProfileToAll(profile);
         Settings.PropertyChanged += OnSettingsChanged;
 
@@ -104,5 +106,11 @@ public sealed class MainViewModel : ObservableObject
             return text;
 
         return fallback;
+    }
+
+    private void PublishNotification(string title, string message)
+    {
+        LatestNotification = message;
+        NotificationRaised?.Invoke(title, message);
     }
 }

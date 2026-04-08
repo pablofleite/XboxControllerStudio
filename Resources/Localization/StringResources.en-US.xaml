@@ -21,7 +21,7 @@
     <sys:String x:Key="LowBatteryThresholdSet"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Low battery threshold set to {0}%.</sys:String>
     <sys:String x:Key="LowBatteryAlert"
-                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller {0}: low battery ({1}%). Threshold: {2}%</sys:String>
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Controller {0}: low battery level.</sys:String>
 
     <!-- Home -->
     <sys:String x:Key="HomeTitle"

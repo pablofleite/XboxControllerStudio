@@ -87,8 +87,8 @@ public sealed class ControllersViewModel : ObservableObject
 
         _lowBatteryNotified[idx] = true;
 
-        string format = GetString("LowBatteryAlert", "Controller {0}: low battery ({1}%). Threshold: {2}%");
-        string message = string.Format(format, idx + 1, state.BatteryPercent, threshold);
+        string format = GetString("LowBatteryAlert", "Controller {0}: low battery level.");
+        string message = string.Format(format, idx + 1);
         Application.Current?.Dispatcher.InvokeAsync(() => LowBatteryAlertRaised?.Invoke(message));
     }
 

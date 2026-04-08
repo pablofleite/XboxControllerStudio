@@ -4,7 +4,7 @@
         xmlns:views="clr-namespace:XboxControllerStudio.Views"
         xmlns:vm="clr-namespace:XboxControllerStudio.ViewModels"
         Title="Xbox Controller Studio"
-        Icon="/Resources/Icons/app-icon.ico"
+        Icon="pack://application:,,,/Resources/Icons/app-icon.ico"
         Width="1100"
         Height="700"
         MinWidth="860"

@@ -35,7 +35,7 @@ public sealed class SettingsViewModel : ObservableObject
     public int LowBatteryThresholdPercent
     {
         get => _lowBatteryThresholdPercent;
-        set => SetProperty(ref _lowBatteryThresholdPercent, Math.Clamp(value, 5, 90));
+        set => SetProperty(ref _lowBatteryThresholdPercent, Math.Clamp(value, 10, 90));
     }
 
     private bool _startWithWindows;

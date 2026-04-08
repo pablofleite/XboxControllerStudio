@@ -31,6 +31,7 @@ public partial class App : Application
         // Wire the root ViewModel and inject dependencies
         _mainVm = new MainViewModel(_pollingService, sendInputService, localizationService);
         _mainVm.Settings.PropertyChanged += OnSettingsPropertyChanged;
+        _mainVm.NotificationRaised += OnNotificationRaised;
 
         InitializeTrayIcon();
 
@@ -49,7 +50,10 @@ public partial class App : Application
         }
 
         if (_mainVm is not null)
+        {
             _mainVm.Settings.PropertyChanged -= OnSettingsPropertyChanged;
+            _mainVm.NotificationRaised -= OnNotificationRaised;
+        }
 
         if (_trayIcon is not null)
         {
@@ -162,10 +166,21 @@ public partial class App : Application
 
     private static Drawing.Icon LoadTrayIcon()
     {
-        string iconPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Resources", "Icons", "app-icon.ico");
-        if (System.IO.File.Exists(iconPath))
-            return new Drawing.Icon(iconPath);
+        var resource = GetResourceStream(new Uri("pack://application:,,,/Resources/Icons/app-icon.ico"));
+        if (resource?.Stream is not null)
+            return new Drawing.Icon(resource.Stream);
 
         return Drawing.SystemIcons.Application;
+    }
+
+    private void OnNotificationRaised(string title, string message)
+    {
+        if (_trayIcon is null)
+            return;
+
+        _trayIcon.BalloonTipTitle = title;
+        _trayIcon.BalloonTipText = message;
+        _trayIcon.BalloonTipIcon = Forms.ToolTipIcon.Warning;
+        _trayIcon.ShowBalloonTip(5000);
     }
 }

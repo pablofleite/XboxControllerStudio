@@ -100,7 +100,7 @@
                         </Grid.ColumnDefinitions>
                         <Slider Grid.Column="0"
                                 Value="{Binding LowBatteryThresholdPercent}"
-                                Minimum="5"
+                                Minimum="10"
                                 Maximum="90"
                                 TickFrequency="5"
                                 IsSnapToTickEnabled="True"

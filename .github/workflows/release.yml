@@ -16,6 +16,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure tag commit is on main
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          git fetch origin main --prune
+          $containsMain = git branch -r --contains $env:GITHUB_SHA | ForEach-Object { $_.Trim() } | Where-Object { $_ -eq "origin/main" }
+          if (-not $containsMain) {
+            throw "Tag commit is not on origin/main. Releases are only allowed from main."
+          }
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -47,12 +59,10 @@ jobs:
             throw "No .exe file was generated in publish/win-x64"
           }
 
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Copy-Item -Path $exe.FullName -Destination dist/$($exe.Name) -Force
-
       - name: Zip artifact
         shell: pwsh
         run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
           Compress-Archive -Path publish/win-x64/* -DestinationPath dist/XboxControllerStudio-win-x64.zip -Force
 
       - name: Upload build artifact
@@ -60,8 +70,6 @@ jobs:
         with:
           name: XboxControllerStudio-win-x64
           path: |
-            publish/win-x64/**
-            dist/*.exe
             dist/XboxControllerStudio-win-x64.zip
 
       - name: Create GitHub Release
@@ -70,5 +78,4 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            dist/*.exe
             dist/XboxControllerStudio-win-x64.zip
