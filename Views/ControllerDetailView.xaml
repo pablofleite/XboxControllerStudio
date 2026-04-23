@@ -331,13 +331,20 @@
                            VerticalAlignment="Center"
                            FontSize="11"/>
 
-                <Button Grid.Row="4"
-                        Grid.ColumnSpan="3"
-                        Content="{DynamicResource AutoCalibrateDeadzone}"
-                        Command="{Binding AutoCalibrateDeadzoneCommand}"
-                        Style="{StaticResource StyleSecondaryButton}"
-                        HorizontalAlignment="Left"
-                        Padding="14,7"/>
+                <StackPanel Grid.Row="4"
+                            Grid.ColumnSpan="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Button Content="{DynamicResource AutoCalibrateDeadzone}"
+                            Command="{Binding AutoCalibrateDeadzoneCommand}"
+                            Style="{StaticResource StyleSecondaryButton}"
+                            Padding="14,7"
+                            Margin="0,0,8,0"/>
+                    <Button Content="{DynamicResource ResetControllerSettings}"
+                            Command="{Binding ResetControllerSettingsCommand}"
+                            Style="{StaticResource StyleSecondaryButton}"
+                            Padding="14,7"/>
+                </StackPanel>
 
                 <TextBlock Grid.Row="5"
                            Grid.ColumnSpan="3"

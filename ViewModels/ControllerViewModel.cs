@@ -141,6 +141,7 @@ public sealed class ControllerViewModel : ObservableObject
     }
 
     public RelayCommand AutoCalibrateDeadzoneCommand { get; }
+    public RelayCommand ResetControllerSettingsCommand { get; }
 
     // Realtime preview values (after sensitivity curve for quick tuning feedback)
     public float PreviewLeftStickX => ApplySensitivity(LeftStickX);
@@ -216,6 +217,7 @@ public sealed class ControllerViewModel : ObservableObject
         _mapper = new ButtonMappingProcessor(sendInput);
         _deadzoneCalibrationStatus = GetString("DeadzoneStatusManual", "Manual tuning");
         AutoCalibrateDeadzoneCommand = new RelayCommand(StartAutoDeadzoneCalibration, () => !IsCalibratingDeadzone && IsConnected);
+        ResetControllerSettingsCommand = new RelayCommand(ResetControllerSettings);
     }
 
     public void RefreshLocalization()
@@ -270,6 +272,17 @@ public sealed class ControllerViewModel : ObservableObject
 
         // Marshal to UI thread
         Application.Current?.Dispatcher.InvokeAsync(() => UpdateProperties(state));
+    }
+
+    private void ResetControllerSettings()
+    {
+        Sensitivity = 1.0f;
+        VibrationEnabled = true;
+        LeftInnerDeadzone = 0.12f;
+        RightInnerDeadzone = 0.12f;
+        IsCalibratingDeadzone = false;
+        DeadzoneCalibrationStatus = GetString("DeadzoneStatusManual", "Manual tuning");
+        CommandManager.InvalidateRequerySuggested();
     }
 
     private void StartAutoDeadzoneCalibration()

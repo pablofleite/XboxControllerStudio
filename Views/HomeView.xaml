@@ -49,17 +49,20 @@
         </Border>
 
         <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="0,0,14,0">
             <ItemsControl ItemsSource="{Binding Controllers}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="2"/>
+                        <UniformGrid Columns="2"
+                                     Margin="0,4,0,0"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:ControllerViewModel}">
                         <Border Margin="0,0,14,14"
-                                Padding="16"
+                                Padding="16,18"
+                                MinHeight="130"
                                 Style="{StaticResource StyleGlassCard}">
                             <Grid>
                                 <Grid.RowDefinitions>

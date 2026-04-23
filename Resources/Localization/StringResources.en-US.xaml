@@ -90,6 +90,8 @@
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Right Stick</sys:String>
     <sys:String x:Key="AutoCalibrateDeadzone"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Auto Calibrate Deadzone</sys:String>
+    <sys:String x:Key="ResetControllerSettings"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Reset to Defaults</sys:String>
     <sys:String x:Key="DeadzoneStatusManual"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Manual tuning</sys:String>
     <sys:String x:Key="DeadzoneStatusCalibrating"

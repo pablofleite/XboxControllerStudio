@@ -90,6 +90,8 @@
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Analogico direito</sys:String>
     <sys:String x:Key="AutoCalibrateDeadzone"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Calibrar deadzone automaticamente</sys:String>
+    <sys:String x:Key="ResetControllerSettings"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib">Restaurar padrões</sys:String>
     <sys:String x:Key="DeadzoneStatusManual"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">Ajuste manual</sys:String>
     <sys:String x:Key="DeadzoneStatusCalibrating"

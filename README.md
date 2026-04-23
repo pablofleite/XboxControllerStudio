@@ -75,6 +75,17 @@ dotnet publish XboxControllerStudio.csproj -c Release -r win-x64 --self-containe
 
 Output: `publish/win-x64`
 
+## Saved Data
+
+User data is stored locally and never synced externally.
+
+| File | Location | Contents |
+|------|----------|----------|
+| `settings.json` | `%LocalAppData%\XboxControllerStudio\settings.json` | Language, battery threshold, polling interval, minimize-to-tray |
+| `profiles.json` | `%LocalAppData%\XboxControllerStudio\profiles.json` | Mapping profiles, active profile, deadzone settings |
+
+To reset everything to defaults, delete the folder `%LocalAppData%\XboxControllerStudio`.
+
 ## Release Process
 
 GitHub Actions builds and publishes `XboxControllerStudio-win-x64.zip` on version tags.

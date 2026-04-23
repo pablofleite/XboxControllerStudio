@@ -39,7 +39,7 @@
                          Style="{StaticResource StyleControllerList}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:ControllerViewModel}">
-                            <Grid Margin="4">
+                            <Grid Margin="6,8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>

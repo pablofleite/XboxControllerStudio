@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using XboxControllerStudio.Core;
 using XboxControllerStudio.Models;
+using XboxControllerStudio.Services;
 
 namespace XboxControllerStudio.ViewModels;
 
@@ -14,6 +15,8 @@ namespace XboxControllerStudio.ViewModels;
 public sealed class ProfilesViewModel : ObservableObject
 {
     public event Action<MappingProfile>? ActiveProfileApplied;
+
+    private readonly ProfilesStorageService _storage = new();
 
     private static readonly ControllerButton[] MappableButtons =
         Enum.GetValues(typeof(ControllerButton))
@@ -79,7 +82,7 @@ public sealed class ProfilesViewModel : ObservableObject
 
     public ProfilesViewModel()
     {
-        // Seed a default profile so the UI has something to show
+        // Always seed the built-in read-only default profile
         var defaultProfile = new MappingProfile
         {
             Name = GetString("ProfilesDefaultName", "Default"),
@@ -87,7 +90,17 @@ public sealed class ProfilesViewModel : ObservableObject
         };
         EnsureAllButtonsMapped(defaultProfile);
         Profiles.Add(defaultProfile);
-        ActiveProfile = defaultProfile;
+
+        // Restore user-created profiles from disk
+        var (saved, activeId) = _storage.Load();
+        foreach (var p in saved)
+        {
+            EnsureAllButtonsMapped(p);
+            Profiles.Add(p);
+        }
+
+        // Restore last active profile, fallback to default
+        ActiveProfile = Profiles.FirstOrDefault(p => p.Id == activeId) ?? defaultProfile;
 
         AddProfileCommand = new RelayCommand(AddProfile);
         RemoveProfileCommand = new RelayCommand<MappingProfile>(RemoveProfile,
@@ -110,6 +123,7 @@ public sealed class ProfilesViewModel : ObservableObject
         Profiles.Add(profile);
         ActiveProfile = profile;
         ActiveProfileApplied?.Invoke(profile);
+        PersistProfiles();
     }
 
     private void RemoveProfile(MappingProfile? profile)
@@ -121,6 +135,7 @@ public sealed class ProfilesViewModel : ObservableObject
         StatusMessage = GetString("ProfilesRemoved", "Profile removed.");
         if (ActiveProfile is not null)
             ActiveProfileApplied?.Invoke(ActiveProfile);
+        PersistProfiles();
     }
 
     private void StartCapture()
@@ -153,6 +168,7 @@ public sealed class ProfilesViewModel : ObservableObject
         SyncActiveMappingsToProfile();
         string format = GetString("ProfilesSavedAt", "Profile '{0}' saved at {1:HH:mm:ss}.");
         StatusMessage = string.Format(format, ActiveProfile.Name, DateTime.Now);
+        PersistProfiles();
     }
 
     private void LoadActiveMappings()
@@ -269,6 +285,12 @@ public sealed class ProfilesViewModel : ObservableObject
 
         ActiveProfile.Mappings = ActiveMappings.ToList();
         ActiveProfileApplied?.Invoke(ActiveProfile);
+        PersistProfiles();
+    }
+
+    private void PersistProfiles()
+    {
+        _storage.Save(Profiles, ActiveProfile?.Id ?? Guid.Empty);
     }
 
     private static void EnsureAllButtonsMapped(MappingProfile profile)
