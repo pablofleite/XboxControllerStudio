@@ -11,6 +11,7 @@ public enum ControllerButton
     LB, RB,
     Start, Back,
     LS, RS,
+    LeftStickUp, LeftStickDown, LeftStickLeft, LeftStickRight,
     DPadUp, DPadDown, DPadLeft, DPadRight,
     LT_Digital, RT_Digital
 }

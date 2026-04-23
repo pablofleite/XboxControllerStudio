@@ -11,6 +11,7 @@ public partial class App : Application
 {
     // Services are created here so they live for the entire application lifetime
     private InputPollingService? _pollingService;
+    private StartupRegistrationService? _startupRegistrationService;
     private Views.MainWindow? _mainWindow;
     private MainViewModel? _mainVm;
     private Forms.NotifyIcon? _trayIcon;
@@ -26,10 +27,12 @@ public partial class App : Application
         var xinputService = new XInputService();
         var sendInputService = new SendInputService();
         var localizationService = new LocalizationService();
+        _startupRegistrationService = new StartupRegistrationService();
         _pollingService = new InputPollingService(xinputService);
 
         // Wire the root ViewModel and inject dependencies
         _mainVm = new MainViewModel(_pollingService, sendInputService, localizationService);
+        _mainVm.Settings.StartWithWindows = _startupRegistrationService.IsEnabled();
         _mainVm.Settings.PropertyChanged += OnSettingsPropertyChanged;
         _mainVm.NotificationRaised += OnNotificationRaised;
 
@@ -142,6 +145,9 @@ public partial class App : Application
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName == nameof(SettingsViewModel.StartWithWindows))
+            _startupRegistrationService?.SetEnabled(_mainVm?.Settings.StartWithWindows == true);
+
         if (e.PropertyName == nameof(SettingsViewModel.SelectedLanguageCode))
             UpdateTrayLocalization();
     }

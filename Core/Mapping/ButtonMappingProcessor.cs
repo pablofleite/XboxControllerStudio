@@ -12,6 +12,9 @@ namespace XboxControllerStudio.Core.Mapping;
 /// </summary>
 public sealed class ButtonMappingProcessor
 {
+    private const float StickPressThreshold = 0.5f;
+    private const float StickReleaseThreshold = 0.35f;
+
     private readonly SendInputService _sendInput;
     private ControllerState? _previous;
 
@@ -30,8 +33,8 @@ public sealed class ButtonMappingProcessor
 
         foreach (var mapping in profile.Mappings)
         {
-            bool wasPressed = GetButton(prev, mapping.Button);
-            bool isPressed = GetButton(current, mapping.Button);
+            bool wasPressed = GetButton(prev, prev, mapping.Button);
+            bool isPressed = GetButton(current, prev, mapping.Button);
 
             if (!wasPressed && isPressed)
                 SendDown(mapping.VirtualKey);
@@ -70,24 +73,34 @@ public sealed class ButtonMappingProcessor
             _sendInput.KeyUp(virtualKey);
     }
 
-    private static bool GetButton(ControllerState s, ControllerButton btn) => btn switch
+    private static bool GetButton(ControllerState current, ControllerState previous, ControllerButton btn) => btn switch
     {
-        ControllerButton.A => s.A,
-        ControllerButton.B => s.B,
-        ControllerButton.X => s.X,
-        ControllerButton.Y => s.Y,
-        ControllerButton.LB => s.LB,
-        ControllerButton.RB => s.RB,
-        ControllerButton.Start => s.Start,
-        ControllerButton.Back => s.Back,
-        ControllerButton.LS => s.LS,
-        ControllerButton.RS => s.RS,
-        ControllerButton.DPadUp => s.DPadUp,
-        ControllerButton.DPadDown => s.DPadDown,
-        ControllerButton.DPadLeft => s.DPadLeft,
-        ControllerButton.DPadRight => s.DPadRight,
-        ControllerButton.LT_Digital => s.LT_Digital,
-        ControllerButton.RT_Digital => s.RT_Digital,
+        ControllerButton.A => current.A,
+        ControllerButton.B => current.B,
+        ControllerButton.X => current.X,
+        ControllerButton.Y => current.Y,
+        ControllerButton.LB => current.LB,
+        ControllerButton.RB => current.RB,
+        ControllerButton.Start => current.Start,
+        ControllerButton.Back => current.Back,
+        ControllerButton.LS => current.LS,
+        ControllerButton.RS => current.RS,
+        ControllerButton.LeftStickUp => GetStickDirection(current.LeftStickY, previous.LeftStickY > 0f),
+        ControllerButton.LeftStickDown => GetStickDirection(-current.LeftStickY, previous.LeftStickY < 0f),
+        ControllerButton.LeftStickLeft => GetStickDirection(-current.LeftStickX, previous.LeftStickX < 0f),
+        ControllerButton.LeftStickRight => GetStickDirection(current.LeftStickX, previous.LeftStickX > 0f),
+        ControllerButton.DPadUp => current.DPadUp,
+        ControllerButton.DPadDown => current.DPadDown,
+        ControllerButton.DPadLeft => current.DPadLeft,
+        ControllerButton.DPadRight => current.DPadRight,
+        ControllerButton.LT_Digital => current.LT_Digital,
+        ControllerButton.RT_Digital => current.RT_Digital,
         _ => false
     };
+
+    private static bool GetStickDirection(float axisValue, bool wasPressed)
+    {
+        float threshold = wasPressed ? StickReleaseThreshold : StickPressThreshold;
+        return axisValue >= threshold;
+    }
 }

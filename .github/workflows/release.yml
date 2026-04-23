@@ -40,10 +40,22 @@ jobs:
       - name: Publish win-x64 (self-contained)
         shell: pwsh
         run: |
+          $tag = "${{ github.ref_name }}"
+          if ([string]::IsNullOrWhiteSpace($tag)) {
+            throw "github.ref_name is empty."
+          }
+
+          $packageVersion = if ($tag.StartsWith('v')) { $tag.Substring(1) } else { $tag }
+          $assemblyVersion = ($packageVersion -split '-', 2)[0]
+
           dotnet publish XboxControllerStudio.csproj `
             -c Release `
             -r win-x64 `
             --self-contained true `
+            /p:Version=$packageVersion `
+            /p:AssemblyVersion=$assemblyVersion `
+            /p:FileVersion=$assemblyVersion `
+            /p:InformationalVersion=$tag `
             /p:PublishSingleFile=true `
             /p:IncludeNativeLibrariesForSelfExtract=true `
             /p:PublishTrimmed=false `

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using XboxControllerStudio.Core;
 using XboxControllerStudio.Services;
@@ -12,12 +13,16 @@ namespace XboxControllerStudio.ViewModels;
 /// </summary>
 public sealed class MainViewModel : ObservableObject
 {
+    private static readonly string AppVersionValue = BuildAppVersion();
+
     // --- Child sections ---
     public HomeViewModel Home { get; }
     public ControllersViewModel Controllers { get; }
     public ProfilesViewModel Profiles { get; }
     public SettingsViewModel Settings { get; }
     private readonly LocalizationService _localization;
+
+    public string AppVersion => AppVersionValue;
 
     private string _latestNotification = "No alerts.";
     public string LatestNotification
@@ -112,5 +117,23 @@ public sealed class MainViewModel : ObservableObject
     {
         LatestNotification = message;
         NotificationRaised?.Invoke(title, message);
+    }
+
+    private static string BuildAppVersion()
+    {
+        var informational = Assembly.GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+            .InformationalVersion;
+
+        string version = informational ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
+        int metadataSeparator = version.IndexOf('+');
+        if (metadataSeparator >= 0)
+            version = version[..metadataSeparator];
+
+        int prereleaseSeparator = version.IndexOf('-');
+        if (prereleaseSeparator >= 0)
+            version = version[..prereleaseSeparator];
+
+        return version.StartsWith("v", StringComparison.OrdinalIgnoreCase) ? version : $"v{version}";
     }
 }

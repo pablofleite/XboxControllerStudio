@@ -176,7 +176,7 @@
 
                 <!-- Version stamp at the bottom -->
                 <TextBlock DockPanel.Dock="Bottom"
-                           Text="v0.1.0-alpha"
+                           Text="{Binding AppVersion}"
                            Foreground="{StaticResource BrushTextMuted}"
                            FontSize="11"
                            Margin="20,0,20,12"
